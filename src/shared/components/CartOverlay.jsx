@@ -1,6 +1,9 @@
 import { useEffect, useMemo, useState } from "react";
 import { useCartStore } from "../../store/cartStore";
 
+// adjust path to where you put it
+import OrderForm from "./OrderForm";
+
 const CartOverlay = ({ open, onClose }) => {
   const items = useCartStore((s) => s.items);
   const totalPrice = useCartStore((s) => s.totalPrice);
@@ -13,19 +16,25 @@ const CartOverlay = ({ open, onClose }) => {
   const [mounted, setMounted] = useState(false);
   const [visible, setVisible] = useState(false);
 
+  // show form only after clicking "Order Now"
+  const [showOrderForm, setShowOrderForm] = useState(false);
+
   useEffect(() => {
     if (open) {
       setMounted(true);
       requestAnimationFrame(() => setVisible(true));
-      // prevent page scroll behind overlay
       document.body.style.overflow = "hidden";
     } else {
       setVisible(false);
       const t = setTimeout(() => setMounted(false), 220);
-      // restore scroll
       document.body.style.overflow = "";
       return () => clearTimeout(t);
     }
+  }, [open]);
+
+  // reset form step when closing
+  useEffect(() => {
+    if (!open) setShowOrderForm(false);
   }, [open]);
 
   // ESC to close
@@ -41,7 +50,6 @@ const CartOverlay = ({ open, onClose }) => {
   }, [mounted, onClose]);
 
   const formattedTotal = useMemo(() => {
-    // adjust currency if you want
     return new Intl.NumberFormat(undefined, {
       style: "currency",
       currency: "BAM",
@@ -49,9 +57,8 @@ const CartOverlay = ({ open, onClose }) => {
   }, [totalPrice]);
 
   const checkout = () => {
-    // TODO: later -> send email / submit order to backend
-    // For now keep it as a placeholder function.
-    console.log("Checkout clicked", { items, totalPrice });
+    // step into order form
+    setShowOrderForm(true);
   };
 
   if (!mounted) return null;
@@ -81,7 +88,6 @@ const CartOverlay = ({ open, onClose }) => {
         className={`
           absolute right-0 top-0 h-full w-full sm:w-[420px]
           bg-white/10 backdrop-blur-xl
-          border-l border-white/15
           shadow-[0_20px_60px_rgba(0,0,0,0.55)]
           transition-all duration-200 ease-out
           ${visible ? "translate-x-0" : "translate-x-6"}
@@ -91,7 +97,9 @@ const CartOverlay = ({ open, onClose }) => {
         {/* Header */}
         <div className="flex items-center justify-between px-5 py-4 border-b border-white/10">
           <div>
-            <p className="text-white font-semibold text-lg">Your Cart</p>
+            <p className="text-white font-semibold text-lg">
+              {showOrderForm ? "Place Order" : "Your Cart"}
+            </p>
             <p className="text-white/60 text-sm">
               {items.length === 0
                 ? "No items yet"
@@ -117,108 +125,126 @@ const CartOverlay = ({ open, onClose }) => {
 
         {/* Body */}
         <div className="px-5 py-4 h-[calc(100%-200px)] overflow-auto">
-          {items.length === 0 ? (
-            <div className="mt-10 text-center text-white/70">
-              <p className="text-base">Cart is empty.</p>
-              <p className="text-sm text-white/50 mt-1">
-                Add a shirt/hoodie and it’ll show up here.
-              </p>
+          {/* STEP 2: order form */}
+          {showOrderForm ? (
+            <div className="space-y-3">
+              <button
+                type="button"
+                onClick={() => setShowOrderForm(false)}
+                className="text-white/70 hover:text-white text-sm underline underline-offset-4"
+              >
+                ← Back to cart
+              </button>
+
+              <OrderForm />
             </div>
           ) : (
-            <div className="space-y-3">
-              {items.map((item) => (
-                <div
-                  key={item.id}
-                  className="
-                    flex gap-3 items-center
-                    p-3 rounded-2xl
-                    bg-white/5 border border-white/10
-                  "
-                >
-                  {/* optional image */}
-                  <div className="h-14 w-14 rounded-xl bg-white/10 border border-white/10 overflow-hidden flex items-center justify-center">
-                    {item.image ? (
-                      <img
-                        src={item.image}
-                        alt={item.name}
-                        className="h-full w-full object-cover"
-                      />
-                    ) : (
-                      <span className="text-white/50 text-xs">IMG</span>
-                    )}
-                  </div>
-
-                  <div className="flex-1 min-w-0">
-                    <p className="text-white font-medium truncate">
-                      {item.name || "Untitled item"}
-                    </p>
-
-                    <div className="flex items-center justify-between mt-1">
-                      <p className="text-white/60 text-sm">
-                        {new Intl.NumberFormat(undefined, {
-                          style: "currency",
-                          currency: "BAM",
-                        }).format(item.price || 0)}
-                      </p>
-
-                      <button
-                        type="button"
-                        onClick={() => removeItem(item.id)}
-                        className="text-white/60 hover:text-white text-xs underline underline-offset-4"
-                      >
-                        Remove
-                      </button>
-                    </div>
-
-                    {/* Qty controls */}
-                    <div className="mt-3 flex items-center justify-between">
-                      <div className="flex items-center gap-2">
-                        <button
-                          type="button"
-                          onClick={() => updateQuantity(item.id, -1)}
-                          className="
-                            h-8 w-8 rounded-full
-                            bg-white/10 hover:bg-white/15
-                            border border-white/10
-                            text-white
-                            transition
-                          "
-                          aria-label="Decrease quantity"
-                        >
-                          −
-                        </button>
-
-                        <div className="min-w-[34px] text-center text-white font-semibold">
-                          {item.quantity}
-                        </div>
-
-                        <button
-                          type="button"
-                          onClick={() => updateQuantity(item.id, 1)}
-                          className="
-                            h-8 w-8 rounded-full
-                            bg-white/10 hover:bg-white/15
-                            border border-white/10
-                            text-white
-                            transition
-                          "
-                          aria-label="Increase quantity"
-                        >
-                          +
-                        </button>
+            // STEP 1: cart list
+            <>
+              {items.length === 0 ? (
+                <div className="mt-10 text-center text-white/70">
+                  <p className="text-base">Cart is empty.</p>
+                  <p className="text-sm text-white/50 mt-1">
+                    Add a shirt/hoodie and it’ll show up here.
+                  </p>
+                </div>
+              ) : (
+                <div className="space-y-3">
+                  {items.map((item) => (
+                    <div
+                      key={item.id}
+                      className="
+                        flex gap-3 items-center
+                        p-3 rounded-2xl
+                        bg-white/5 border border-white/10
+                      "
+                    >
+                      {/* optional image */}
+                      <div className="h-14 w-14 rounded-xl bg-white/10 border border-white/10 overflow-hidden flex items-center justify-center">
+                        {item.image ? (
+                          <img
+                            src={item.image}
+                            alt={item.name}
+                            className="h-full w-full object-cover"
+                          />
+                        ) : (
+                          <span className="text-white/50 text-xs">IMG</span>
+                        )}
                       </div>
 
-                      <p className="text-white font-semibold">
-                        {new Intl.NumberFormat(undefined, {
-                          style: "currency",
-                          currency: "BAM",
-                        }).format((item.price || 0) * (item.quantity || 0))}
-                      </p>
+                      <div className="flex-1 min-w-0">
+                        <p className="text-white font-medium truncate">
+                          {item.name || "Untitled item"}
+                        </p>
+
+                        <div className="flex items-center justify-between mt-1">
+                          <p className="text-white/60 text-sm">
+                            {new Intl.NumberFormat(undefined, {
+                              style: "currency",
+                              currency: "BAM",
+                            }).format(item.price || 0)}
+                          </p>
+
+                          <button
+                            type="button"
+                            onClick={() => removeItem(item.id)}
+                            className="text-white/60 hover:text-white text-xs underline underline-offset-4"
+                          >
+                            Remove
+                          </button>
+                        </div>
+
+                        {/* Qty controls */}
+                        <div className="mt-3 flex items-center justify-between">
+                          <div className="flex items-center gap-2">
+                            <button
+                              type="button"
+                              onClick={() => updateQuantity(item.id, -1)}
+                              className="
+                                h-8 w-8 rounded-full
+                                bg-white/10 hover:bg-white/15
+                                border border-white/10
+                                text-white
+                                transition
+                              "
+                              aria-label="Decrease quantity"
+                            >
+                              −
+                            </button>
+
+                            <div className="min-w-[34px] text-center text-white font-semibold">
+                              {item.quantity}
+                            </div>
+
+                            <button
+                              type="button"
+                              onClick={() => updateQuantity(item.id, 1)}
+                              className="
+                                h-8 w-8 rounded-full
+                                bg-white/10 hover:bg-white/15
+                                border border-white/10
+                                text-white
+                                transition
+                              "
+                              aria-label="Increase quantity"
+                            >
+                              +
+                            </button>
+                          </div>
+
+                          <p className="text-white font-semibold">
+                            {new Intl.NumberFormat(undefined, {
+                              style: "currency",
+                              currency: "BAM",
+                            }).format((item.price || 0) * (item.quantity || 0))}
+                          </p>
+                        </div>
+                      </div>
                     </div>
-                  </div>
+                  ))}
                 </div>
-              ))}
-            </div>
+              )}
+            </>
           )}
         </div>
 
@@ -229,37 +255,40 @@ const CartOverlay = ({ open, onClose }) => {
             <p className="text-white font-semibold">{formattedTotal}</p>
           </div>
 
-          <div className="flex gap-2">
-            <button
-              type="button"
-              onClick={clearCart}
-              disabled={items.length === 0}
-              className="
-                flex-1 h-11 rounded-xl
-                bg-white/10 hover:bg-white/15
-                border border-white/10
-                text-white
-                transition
-                disabled:opacity-40 disabled:cursor-not-allowed
-              "
-            >
-              Clear
-            </button>
+          {/* hide cart buttons when in form step */}
+          {!showOrderForm && (
+            <div className="flex gap-2">
+              <button
+                type="button"
+                onClick={clearCart}
+                disabled={items.length === 0}
+                className="
+                  flex-1 h-11 rounded-xl
+                  bg-white/10 hover:bg-white/15
+                  border border-white/10
+                  text-white
+                  transition
+                  disabled:opacity-40 disabled:cursor-not-allowed
+                "
+              >
+                Clear
+              </button>
 
-            <button
-              type="button"
-              onClick={checkout}
-              disabled={items.length === 0}
-              className="
-                flex-[1.4] h-11 rounded-xl
-                bg-white text-black font-semibold
-                hover:opacity-90 transition
-                disabled:opacity-40 disabled:cursor-not-allowed
-              "
-            >
-              Proceed to Checkout
-            </button>
-          </div>
+              <button
+                type="button"
+                onClick={checkout}
+                disabled={items.length === 0}
+                className="
+                  flex-[1.4] h-11 rounded-xl
+                  bg-white text-black font-semibold
+                  hover:opacity-90 transition
+                  disabled:opacity-40 disabled:cursor-not-allowed
+                "
+              >
+                Order Now
+              </button>
+            </div>
+          )}
         </div>
       </div>
     </div>
