@@ -6,7 +6,7 @@ import SwipeUp from "../shared/components/SwipeUp";
 
 const Hero = () => {
   return (
-    <div className="relative h-[100vh] flex flex-col items-center pt-[10vh] overflow-hidden">
+    <div className="relative h-[100vh] flex flex-col items-center pt-[5vh] overflow-hidden">
       <FireSparksBackground />
 
       {/* The rising reddish sparks */}
@@ -17,7 +17,7 @@ const Hero = () => {
         className="relative scale-70 z-10 "
       />
 
-      <h1 className="mt-[12vh] text-[3.4rem] relative z-10">BUILT FOR</h1>
+      <h1 className="mt-[10vh] text-[3.4rem] relative z-10">BUILT FOR</h1>
       <h1 className="text-[3.6rem] mt-[-25px] red-secondary relative z-10">
         THE BARZ
       </h1>
