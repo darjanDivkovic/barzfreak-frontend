@@ -2,11 +2,11 @@ import Logo from "../public/assets/Logo.svg";
 import BackgroundX from "../public/assets/BackgroundX.svg";
 import LocationIcon from "../public/assets/LocationIcon.svg";
 import DateIcon from "../public/assets/DateIcon.svg";
-
 import { createClient } from "@supabase/supabase-js";
 
 import FireSparksBackground from "./shared/components/FireSparksBackground";
 import { useEffect, useRef, useState } from "react";
+import Shop from "./sections/Shop";
 
 const supabase = createClient(
   import.meta.env.VITE_SUPABASE_URL,
@@ -138,7 +138,9 @@ function App() {
         />
       </div>
 
-      <div className="mx-4 min-h-[100vh]">
+      <Shop />
+
+      <div className="mx-4 mt-[20vh] min-h-[100vh]">
         <div className="opacity-20">
           <h1 className="text-[1.2rem] leading-tight text-white">
             TOURNAMENTS
