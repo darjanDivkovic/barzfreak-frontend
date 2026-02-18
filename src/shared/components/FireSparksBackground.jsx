@@ -43,12 +43,12 @@ const FireSparksBackground = () => {
 
       particles: {
         number: {
-          value: 140,
+          value: 100,
           density: { enable: true, area: 300 },
         },
 
         color: {
-          value: ["#fa2727", "#ff3300"],
+          value: ["#fa27275e", "#ff330098"],
         },
 
         shape: { type: "circle" },
