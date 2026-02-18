@@ -43,8 +43,8 @@ const FireSparksBackground = () => {
 
       particles: {
         number: {
-          value: 70,
-          density: { enable: true, area: 900 },
+          value: 140,
+          density: { enable: true, area: 300 },
         },
 
         color: {
@@ -80,7 +80,7 @@ const FireSparksBackground = () => {
         move: {
           enable: true,
           direction: "top",
-          speed: { min: 5.8, max: 10.2 },
+          speed: { min: 8.8, max: 10.2 },
           random: true,
           straight: true,
           outModes: {
