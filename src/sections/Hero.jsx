@@ -2,6 +2,7 @@ import Logo from "../../public/assets/Logo.svg";
 import BackgroundX from "../../public/assets/BackgroundX.svg";
 
 import FireSparksBackground from "../shared/components/FireSparksBackground";
+import SwipeUp from "../shared/components/SwipeUp";
 
 const Hero = () => {
   return (
@@ -28,6 +29,10 @@ const Hero = () => {
         <br />
         No comfort. No compromise.
       </p>
+
+      <div className="absolute bottom-20">
+        <SwipeUp />
+      </div>
 
       <img
         src={BackgroundX}
