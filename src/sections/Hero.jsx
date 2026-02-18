@@ -30,7 +30,7 @@ const Hero = () => {
         No comfort. No compromise.
       </p>
 
-      <div className="absolute bottom-20">
+      <div className="absolute bottom-10">
         <SwipeUp />
       </div>
 

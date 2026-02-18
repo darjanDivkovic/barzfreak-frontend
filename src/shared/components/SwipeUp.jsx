@@ -25,10 +25,6 @@ const SwipeUp = () => {
           />
         </svg>
       </div>
-
-      <p className="text-sm uppercase tracking-wider font-medium opacity-90">
-        Swipe Up
-      </p>
     </div>
   );
 };
