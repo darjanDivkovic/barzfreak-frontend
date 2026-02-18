@@ -5,6 +5,7 @@ import TShirtWhite from "../../public/assets/merch/TShirtWhite.png";
 import HoodieBlack from "../../public/assets/merch/HoodieBlack.png";
 import HoodieWhite from "../../public/assets/merch/HoodieWhite.png";
 import AddToCartButton from "../shared/components/AddToCartButton";
+import { useCartStore } from "../store/cartStore";
 
 const merchItems = [
   {
@@ -25,12 +26,14 @@ const merchItems = [
 
 function MerchCard({ item }) {
   const [color, setColor] = useState("black");
+  const addItem = useCartStore((state) => state.addItem);
 
   const imageSrc = color === "black" ? item.blackImage : item.whiteImage;
   const altText = `${item.name} ${color === "black" ? "Black" : "White"}`;
 
   // ← added this function so we know exactly what variant is being added
   const handleAddToCart = () => {
+    console.log("here");
     const selected = {
       name: item.name,
       color: color,
@@ -40,6 +43,7 @@ function MerchCard({ item }) {
     };
     console.log("Adding to cart:", selected);
     // Later you can replace this with real cart logic
+    addItem(selected);
   };
 
   return (

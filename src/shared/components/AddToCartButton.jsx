@@ -1,61 +1,46 @@
-import { useState, useRef, useEffect } from "react";
+import { useRef, useState, useEffect } from "react";
 
 function AddToCartButton({ onAdd }) {
   const [isHolding, setIsHolding] = useState(false);
-  const holdDuration = 500; // 2 seconds ← you have 500 ms now (0.5s), was probably for testing
-  const intervalRef = useRef(null);
+
+  const timeoutRef = useRef(null);
+  const holdingRef = useRef(false);
+
+  const HOLD_DELAY = 700; // call onAdd after 1000ms hold
 
   const startHold = () => {
+    if (holdingRef.current) return;
+
+    holdingRef.current = true;
     setIsHolding(true);
 
-    intervalRef.current = setInterval(() => {
-      setIsHolding((current) => {
-        if (!current) {
-          clearInterval(intervalRef.current);
-          return false;
-        }
-
-        const elapsed = Date.now() - startTimeRef.current;
-        if (elapsed >= holdDuration) {
-          clearInterval(intervalRef.current);
-          onAdd();
-          setIsHolding(false);
-          return false;
-        }
-        return true;
-      });
-    }, 50);
+    timeoutRef.current = setTimeout(() => {
+      if (!holdingRef.current) return; // released early
+      onAdd(); // ✅ fires once after 1000ms hold
+    }, HOLD_DELAY);
   };
 
-  const cancelHold = () => {
-    if (intervalRef.current) {
-      clearInterval(intervalRef.current);
-    }
+  const stopHold = () => {
+    holdingRef.current = false;
     setIsHolding(false);
-  };
 
-  const startTimeRef = useRef(0);
-
-  const handlePointerDown = () => {
-    startTimeRef.current = Date.now();
-    startHold();
+    if (timeoutRef.current) {
+      clearTimeout(timeoutRef.current);
+      timeoutRef.current = null;
+    }
   };
 
   useEffect(() => {
-    return () => {
-      if (intervalRef.current) clearInterval(intervalRef.current);
-    };
+    return () => stopHold();
   }, []);
 
   return (
     <div className="mt-6">
       <button
         type="button"
-        onPointerDown={handlePointerDown}
-        onPointerUp={cancelHold}
-        onPointerLeave={cancelHold}
-        onPointerCancel={cancelHold}
-        onTouchEnd={cancelHold}
+        onPointerDown={startHold}
+        onPointerUp={stopHold}
+        onPointerCancel={stopHold}
         className={`
           relative overflow-hidden
           w-full py-4 px-6
@@ -65,21 +50,25 @@ function AddToCartButton({ onAdd }) {
           transition-colors duration-300
           ${
             isHolding
-              ? ""
-              : "border-white/20 hover:border-white/90 bg-transparent"
+              ? "border-red-400/50 bg-red-950/30"
+              : "hover:border-white/90 hover:bg-white/5"
           }
           select-none
+          active:scale-98
         `}
       >
+        {/* Progress / filling bar (your original animation) */}
         <div
           className={`
-            absolute inset-0 bg-red-600/70 
-            transition-transform duration-[500ms] ease-linear
+            absolute inset-0 bg-red-600/60
+            transition-transform duration-500 ease-linear
             ${isHolding ? "translate-x-0" : "-translate-x-full"}
           `}
         />
 
-        <span className="relative z-10">Add to Cart</span>
+        <span className="relative z-10 flex items-center justify-center gap-2">
+          {isHolding ? "Holding..." : "Add to Cart"}
+        </span>
       </button>
     </div>
   );
