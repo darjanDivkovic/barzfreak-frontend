@@ -27,7 +27,7 @@ function App() {
           loading ? "opacity-100" : "opacity-0 pointer-events-none"
         }`}
       >
-        <div className="animate-pulse text-3xl tracking-widest">LOADING...</div>
+        <div className="animate-pulse text-xl tracking-widest">LOADING...</div>
       </div>
 
       <div>
