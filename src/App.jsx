@@ -34,7 +34,7 @@ function App() {
         />
       </div>
 
-      <div className="mt-[-80px] mx-4 h-[100vh]">
+      <div className="mx-4 h-[100vh]">
         {" "}
         {/* Height temporary here */}
         <div className="border-t border-b border-white">
