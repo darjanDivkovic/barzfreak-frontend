@@ -38,7 +38,7 @@ function App() {
         {" "}
         {/* Height temporary here */}
         <div className="">
-          <hr className="border-white mb-1" />
+          <hr className="border-white mb-1.5" />
           <h1 className="text-[2.2rem] leading-tight text-white text-center">
             TOURNAMENTS
           </h1>
