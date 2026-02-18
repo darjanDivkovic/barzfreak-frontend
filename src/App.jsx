@@ -5,6 +5,7 @@ import Hero from "./sections/Hero";
 import Anouncements from "./sections/Anouncements";
 import ShopWidget from "./shared/components/ShopWidget";
 import CartOverlay from "./shared/components/CartOverlay";
+import Delimiter from "./shared/components/Delimiter";
 
 function App() {
   const [cartOpen, setCartOpen] = useState(false);
@@ -14,10 +15,11 @@ function App() {
       <div>
         <Hero />
 
-        <hr className="mt-[20vh]" />
+        <Delimiter header="SHOP" className="mt-[10vh]" />
+        <hr className="mt-[5vh]" />
         <Shop />
 
-        <hr className="mt-[20vh]" />
+        <Delimiter header="ANNOUNCEMENTS" className="mt-[10vh]" />
         <Anouncements />
 
         <ShopWidget onClick={() => setCartOpen(true)} />

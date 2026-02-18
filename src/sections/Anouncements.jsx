@@ -23,7 +23,7 @@ const Anouncements = () => {
 
   return (
     <div>
-      <div className="mx-4 mt-[20vh] min-h-[100vh]">
+      <div className="ml-5 mt-[5vh] min-h-[100vh]">
         <div className="opacity-20">
           <h1 className="text-[1.rem] leading-tight text-white">TOURNAMENTS</h1>
         </div>
