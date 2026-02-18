@@ -10,13 +10,21 @@
   src: url("../public/fonts/CalSans-Regular.woff") format("woff");
 }
 
+html,
+body {
+  overflow-x: hidden;
+  width: 100%;
+}
+
 body {
   margin: 0;
+  touch-action: pan-y;
   padding: 0;
   box-sizing: border-box;
   background-color: #050505;
   font-family: "font-primary", serif;
   color: #ffffff;
+
   overflow-x: hidden;
 }
 
