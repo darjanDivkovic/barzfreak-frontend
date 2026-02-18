@@ -1,0 +1,33 @@
+@import "tailwindcss";
+
+@font-face {
+  font-family: "font-primary";
+  src: url("../public/fonts/NotoSerifTC-Medium.woff2") format("woff2");
+  font-weight: semi-bold;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  background-color: #0d0d0d;
+  font-family: "font-primary", serif;
+}
+
+h1,
+p {
+  color: #fff;
+}
+
+p {
+  font-family: "inter", sans-serif;
+}
+
+.red-secondary {
+  color: #a40000;
+}
+
+.gray-secondary {
+  color: #fff;
+  opacity: 0.4;
+}
