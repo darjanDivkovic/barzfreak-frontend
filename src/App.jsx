@@ -1,5 +1,5 @@
-import Logo from "./assets/logo.svg";
-import BackgroundX from "./assets/backgroundX.svg";
+import Logo from "../public/assets/Logo.svg";
+import BackgroundX from "../public/assets/BackgroundX.svg";
 import FireSparksBackground from "./shared/components/FireSparksBackground"; // ← import here
 
 function App() {
