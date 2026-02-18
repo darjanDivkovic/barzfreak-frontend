@@ -16,12 +16,12 @@ const Hero = () => {
         className="relative scale-70 z-10 "
       />
 
-      <h1 className="mt-[12vh] text-[4.4rem] relative z-10">BUILT FOR</h1>
-      <h1 className="text-[4.6rem] mt-[-25px] red-secondary relative z-10">
+      <h1 className="mt-[12vh] text-[3.4rem] relative z-10">BUILT FOR</h1>
+      <h1 className="text-[3.6rem] mt-[-25px] red-secondary relative z-10">
         THE BARZ
       </h1>
 
-      <p className="mt-[200px] text-center px-8 gray-secondary text-[14px]/[17px] relative z-10">
+      <p className="mt-4 text-center px-8 gray-secondary text-[14px]/[17px] relative z-10">
         Forged in struggle. Raised on concrete.
         <br />
         Fueled by pain. Unbroken by fear.
