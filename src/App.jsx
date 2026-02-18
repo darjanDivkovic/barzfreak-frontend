@@ -1,12 +1,10 @@
-import Logo from "../public/assets/Logo.svg";
-import BackgroundX from "../public/assets/BackgroundX.svg";
 import LocationIcon from "../public/assets/LocationIcon.svg";
 import DateIcon from "../public/assets/DateIcon.svg";
 import { createClient } from "@supabase/supabase-js";
 
-import FireSparksBackground from "./shared/components/FireSparksBackground";
 import { useEffect, useRef, useState } from "react";
 import Shop from "./sections/Shop";
+import Hero from "./sections/Hero";
 
 const supabase = createClient(
   import.meta.env.VITE_SUPABASE_URL,
@@ -45,7 +43,7 @@ function Tournament({ tournament, onImageClick }) {
 
   return (
     <div key={tournament.id} className="">
-      <h1 className="text-[2rem] font-bold whitespace-pre-line">
+      <h1 className="text-[2rem] whitespace-pre-line">
         {tournament.name.trim()}
       </h1>
 
@@ -112,39 +110,14 @@ function App() {
 
   return (
     <>
-      <div className="relative h-[100vh] flex flex-col items-center pt-[10vh] overflow-hidden">
-        {/* The rising reddish sparks */}
-        <FireSparksBackground />
+      <Hero />
 
-        <img src={Logo} alt="BarzFreak Logo" className="relative z-10" />
-
-        <h1 className="mt-[12vh] text-[3.4rem] relative z-10">BUILT FOR</h1>
-        <h1 className="text-[3.6rem] mt-[-25px] red-secondary relative z-10">
-          THE BARZ
-        </h1>
-
-        <p className="mt-4 text-center px-8 gray-secondary text-[14px]/[17px] relative z-10">
-          Forged in struggle. Raised on concrete.
-          <br />
-          Fueled by pain. Unbroken by fear.
-          <br />
-          No comfort. No compromise.
-        </p>
-
-        <img
-          src={BackgroundX}
-          alt="Background X"
-          className="absolute bottom-0 z-0"
-        />
-      </div>
-
+      <hr className="mt-[20vh]" />
       <Shop />
 
       <div className="mx-4 mt-[20vh] min-h-[100vh]">
         <div className="opacity-20">
-          <h1 className="text-[1.2rem] leading-tight text-white">
-            TOURNAMENTS
-          </h1>
+          <h1 className="text-[1.rem] leading-tight text-white">TOURNAMENTS</h1>
         </div>
         {tournaments.map((tournament) => (
           <Tournament
