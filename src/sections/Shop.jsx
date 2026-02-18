@@ -67,12 +67,13 @@ function MerchCard({ item }) {
           <ColorButton
             color="black"
             isSelected={color === "black"}
-            onClick={() => setColor("black")}
+            onClick={() => setColor(color === "black" ? "white" : "black")}
           />
+
           <ColorButton
             color="white"
             isSelected={color === "white"}
-            onClick={() => setColor("white")}
+            onClick={() => setColor(color === "black" ? "white" : "black")}
           />
         </div>
       </div>
