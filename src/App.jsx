@@ -44,7 +44,7 @@ function Tournament({ tournament, onImageClick }) {
   }, [tournament.images?.length]);
 
   return (
-    <div key={tournament.id} className="mt-[7vh]">
+    <div key={tournament.id} className="">
       <h1 className="text-[2rem] font-bold whitespace-pre-line">
         {tournament.name.trim()}
       </h1>
@@ -112,7 +112,7 @@ function App() {
 
   return (
     <>
-      <div className="relative h-[100vh] flex flex-col items-center pt-[7vh] overflow-hidden">
+      <div className="relative h-[100vh] flex flex-col items-center pt-[10vh] overflow-hidden">
         {/* The rising reddish sparks */}
         <FireSparksBackground />
 
@@ -139,12 +139,10 @@ function App() {
       </div>
 
       <div className="mx-4 min-h-[100vh]">
-        <div className="">
-          <hr className="border-white mb-1.5" />
-          <h1 className="text-[2.2rem] leading-tight text-white text-center">
+        <div className="opacity-20">
+          <h1 className="text-[1.2rem] leading-tight text-white">
             TOURNAMENTS
           </h1>
-          <hr className="border-white mt-1" />
         </div>
         {tournaments.map((tournament) => (
           <Tournament
