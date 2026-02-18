@@ -17,6 +17,7 @@ body {
   background-color: #050505;
   font-family: "font-primary", serif;
   color: #ffffff;
+  overflow-x: hidden;
 }
 
 p {
