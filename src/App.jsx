@@ -37,10 +37,12 @@ function App() {
       <div className="mx-4 h-[100vh]">
         {" "}
         {/* Height temporary here */}
-        <div className="border-t border-b border-white">
-          <h1 className="text-[2.2rem]/[2.2rem] text-white text-center">
+        <div className="">
+          <hr className="border-white" />
+          <h1 className="text-[2.2rem] leading-tight text-white text-center">
             TOURNAMENTS
           </h1>
+          <hr className="border-white mt-1" />
         </div>
         <div>
           <h1 className="text-[2rem] mt-[7vh] font-bold">
