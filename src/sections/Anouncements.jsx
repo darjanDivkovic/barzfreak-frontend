@@ -27,13 +27,15 @@ const Anouncements = () => {
         <div className="opacity-20">
           <h1 className="text-[1.rem] leading-tight text-white">TOURNAMENTS</h1>
         </div>
-        {tournaments.map((tournament) => (
-          <Tournament
-            key={tournament.id}
-            tournament={tournament}
-            onImageClick={setSelectedImage}
-          />
-        ))}
+        <div className="flex flex-col gap-[10vh]">
+          {tournaments.map((tournament) => (
+            <Tournament
+              key={tournament.id}
+              tournament={tournament}
+              onImageClick={setSelectedImage}
+            />
+          ))}
+        </div>
       </div>
 
       {selectedImage && (

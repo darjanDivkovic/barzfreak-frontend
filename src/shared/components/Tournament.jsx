@@ -35,7 +35,7 @@ function Tournament({ tournament, onImageClick }) {
 
   return (
     <div key={tournament.id} className="">
-      <h1 className="text-[2rem] whitespace-pre-line">
+      <h1 className="text-[2rem] whitespace-pre-line max-w-[85vw]">
         {tournament.name.trim()}
       </h1>
 
@@ -55,7 +55,7 @@ function Tournament({ tournament, onImageClick }) {
       </div>
 
       {tournament.images?.length > 0 && (
-        <div className="mt-6 md:mt-10">
+        <div className="mt-16 md:mt-10">
           <div
             ref={sliderRef}
             className="flex overflow-x-auto snap-x snap-mandatory scrollbar-hide gap-4 -mx-1 px-1"

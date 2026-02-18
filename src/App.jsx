@@ -15,11 +15,9 @@ function App() {
       <div>
         <Hero />
 
-        <Delimiter header="SHOP" className="mt-[10vh]" />
         <hr className="mt-[5vh]" />
         <Shop />
 
-        <Delimiter header="ANNOUNCEMENTS" className="mt-[10vh]" />
         <Anouncements />
 
         <ShopWidget onClick={() => setCartOpen(true)} />
