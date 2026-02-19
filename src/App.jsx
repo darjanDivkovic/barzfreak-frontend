@@ -1,5 +1,6 @@
 // src/App.jsx
 import { useEffect, useState } from "react";
+import { ReactLenis } from "lenis/react";
 
 import Hero from "./sections/Hero";
 import Shop from "./sections/Shop";
@@ -25,6 +26,7 @@ function App() {
   return (
     <LanguageProvider>
       <div className="relative min-h-screen">
+        <ReactLenis root options={{ duration: 1.2, smoothWheel: true }} />
         <LoadingScreen />
         <main>
           <Hero />

@@ -80,3 +80,11 @@ p {
 .animate-swipe-up {
   animation: swipe-up 2.2s ease-in-out infinite;
 }
+
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
