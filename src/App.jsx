@@ -1,45 +1,44 @@
-import { useState, useEffect } from "react";
+// src/App.jsx
+import { useEffect, useState } from "react";
 
-import Shop from "./sections/Shop";
 import Hero from "./sections/Hero";
+import Shop from "./sections/Shop";
 import Anouncements from "./sections/Anouncements";
 import ShopWidget from "./shared/components/ShopWidget";
 import CartOverlay from "./shared/components/CartOverlay";
 import Footer from "./sections/Footer";
 
+import LoadingScreen from "./shared/components/LoadingScreen";
+import { LanguageProvider } from "./context/LanguageContext";
+
 function App() {
-  const [cartOpen, setCartOpen] = useState(false);
-  const [loading, setLoading] = useState(true);
+  const [isCartOpen, setIsCartOpen] = useState(false);
 
+  // Optional: lock body scroll when cart is open
   useEffect(() => {
-    const t = setTimeout(() => {
-      setLoading(false);
-    }, 1200);
-
-    return () => clearTimeout(t);
-  }, []);
+    document.body.style.overflow = isCartOpen ? "hidden" : "";
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [isCartOpen]);
 
   return (
-    <div className="relative h-screen">
-      {/* 🔹 Loading Overlay */}
-      <div
-        className={`fixed inset-0 z-[9999] flex items-center justify-center bg-black text-white transition-opacity duration-500 ${
-          loading ? "opacity-100" : "opacity-0 pointer-events-none"
-        }`}
-      >
-        <div className="animate-pulse text-xl tracking-widest">LOADING...</div>
-      </div>
+    <LanguageProvider>
+      <div className="relative min-h-screen">
+        <LoadingScreen />
+        <main>
+          <Hero />
+          <Shop />
+          <Anouncements />
+        </main>
 
-      <div>
-        <Hero />
-        <Shop />
-        <Anouncements />
-        <ShopWidget onClick={() => setCartOpen(true)} />
+        <ShopWidget onClick={() => setIsCartOpen(true)} />
+
         <Footer />
-      </div>
 
-      <CartOverlay open={cartOpen} onClose={() => setCartOpen(false)} />
-    </div>
+        <CartOverlay open={isCartOpen} onClose={() => setIsCartOpen(false)} />
+      </div>
+    </LanguageProvider>
   );
 }
 

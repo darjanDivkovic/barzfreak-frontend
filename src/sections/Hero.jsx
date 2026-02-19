@@ -3,8 +3,12 @@ import BackgroundX from "../../public/assets/BackgroundX.svg";
 
 import FireSparksBackground from "../shared/components/FireSparksBackground";
 import SwipeUp from "../shared/components/SwipeUp";
+import { useLanguage } from "../context/LanguageContext";
+import { translations } from "../i18n/translations";
 
 const Hero = () => {
+  const { lang } = useLanguage();
+  const t = translations[lang]?.hero;
   return (
     <div className="relative h-[100vh] flex flex-col items-center pt-[5vh] overflow-hidden">
       <FireSparksBackground />
@@ -23,11 +27,11 @@ const Hero = () => {
       </h1>
 
       <p className="mt-4 text-center px-8 gray-secondary text-[14px]/[17px] relative z-10">
-        Forged in struggle. Raised on concrete.
+        {t.line1}
         <br />
-        Fueled by pain. Unbroken by fear.
+        {t.line2}
         <br />
-        No comfort. No compromise.
+        {t.line3}
       </p>
 
       <div className="absolute bottom-10">

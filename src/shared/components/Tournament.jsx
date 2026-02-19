@@ -48,10 +48,12 @@ function Tournament({ tournament, onImageClick }) {
           />
           <p className="opacity-50">{tournament.location}</p>
         </div>
-        <div className="flex items-center">
-          <img src={DateIcon} alt="Date" className="inline-block mr-2" />
-          <p className="opacity-50">{tournament.date}</p>
-        </div>
+        {tournament.date && (
+          <div className="flex items-center">
+            <img src={DateIcon} alt="Date" className="inline-block mr-2" />
+            <p className="opacity-50">{tournament.date}</p>
+          </div>
+        )}
       </div>
 
       <p className="mt-5 w-[80%] whitespace-pre-line opacity-80 text-sm">
