@@ -12,7 +12,7 @@ const Footer = () => {
       </h1>
 
       <div className="flex items-center justify-center mt-15 opacity-60">
-        <a href="www.youtube.com/@Barzfreak.official" target="blank">
+        <a href="https://www.instagram.com/barzfreak.official/" target="blank">
           <img
             src={Instagram}
             alt="Instagram Icon"
@@ -26,7 +26,7 @@ const Footer = () => {
             className="mx-5 h-8 inline-block"
           />
         </a>
-        <a href="https://www.instagram.com/barzfreak.official/" target="blank">
+        <a href="www.youtube.com/@Barzfreak.official" target="blank">
           <img
             src={YouTube}
             alt="YouTube Icon"
