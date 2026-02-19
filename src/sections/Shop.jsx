@@ -15,14 +15,14 @@ const merchItems = [
     key: "tshirt", // ← internal key (not displayed)
     blackImage: TShirtBlack,
     whiteImage: TShirtWhite,
-    price: 20,
+    price: 22,
     oldPrice: 30,
   },
   {
     key: "hoodie",
     blackImage: HoodieBlack,
     whiteImage: HoodieWhite,
-    price: 50,
+    price: 40,
     oldPrice: 70,
   },
 ];
@@ -91,7 +91,9 @@ function MerchCard({ item }) {
 
       <h1 className="text-5xl mt-5 mb-12">
         {item.price}KM{" "}
-        <span className="text-2xl opacity-50">{item.oldPrice}KM</span>
+        <span className="text-2xl text-white/50 line-through decoration-2 decoration-red-500 opacity-70">
+          {item.oldPrice}KM
+        </span>
       </h1>
 
       <AddToCartButton onAdd={handleAddToCart} />
