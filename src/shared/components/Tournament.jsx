@@ -88,6 +88,8 @@ function Tournament({ tournament, onImageClick }) {
           </div>
         </div>
       )}
+
+      <hr className="mt-[8vh] opacity-20 w-[90vw]" />
     </div>
   );
 }

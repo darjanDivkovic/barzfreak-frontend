@@ -6,7 +6,6 @@ import YouTube from "../../public/assets/icons/YouTube.svg";
 const Footer = () => {
   return (
     <div className="h-[500px] mt-[10vh]">
-      <hr className="mt-[25px] border-white mx-5 opacity-20" />
       <h1 className="mx-5 text-2xl mt-5 text-center mt-16">BUILT FOR</h1>
       <h1 className="mx-5 text-2xl mt-[-2px] text-center text-[#A40000]">
         THE BARZ

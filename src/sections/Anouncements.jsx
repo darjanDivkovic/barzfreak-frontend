@@ -28,7 +28,7 @@ const Anouncements = () => {
         <div className="opacity-20">
           <h1 className="text-[1.rem] leading-tight text-white">TOURNAMENTS</h1>
         </div>
-        <div className="flex flex-col gap-[10vh]">
+        <div className="flex flex-col gap-[7vh]">
           {tournaments.map((tournament) => (
             <Tournament
               key={tournament.id}
