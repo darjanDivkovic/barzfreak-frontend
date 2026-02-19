@@ -18,12 +18,13 @@ const Anouncements = () => {
 
   async function getTournaments() {
     const { data } = await supabase.from("tournament").select();
+    console.log("data", data);
     setTournaments(data || []);
   }
 
   return (
     <div>
-      <div className="ml-5 mt-[5vh] min-h-[100vh]">
+      <div className="ml-5 mt-[15vh] min-h-[100vh]">
         <div className="opacity-20">
           <h1 className="text-[1.rem] leading-tight text-white">TOURNAMENTS</h1>
         </div>
