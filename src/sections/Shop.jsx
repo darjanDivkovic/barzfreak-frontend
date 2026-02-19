@@ -126,12 +126,13 @@ function ColorButton({ color, isSelected, onClick, label }) {
 }
 
 export default function Shop() {
-  const { t } = useTranslation();
-
   return (
-    <div className="mx-4 flex flex-col gap-12">
+    <div className="mx-4 flex flex-col md:flex-row gap-12 md:px-[150px] xl:px-[20%]">
       {merchItems.map((item, index) => (
-        <div key={item.key} className={index > 0 ? "mt-[7vh]" : ""}>
+        <div
+          key={item.key}
+          className={`w-full md:flex-1 ${index > 0 ? "mt-[7vh] md:mt-0" : ""}`}
+        >
           <MerchCard item={item} />
         </div>
       ))}

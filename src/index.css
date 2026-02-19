@@ -88,3 +88,28 @@ html.lenis body {
 .lenis.lenis-smooth {
   scroll-behavior: auto !important;
 }
+
+/* Hide scrollbar — Chrome / Edge / Safari */
+::-webkit-scrollbar {
+  width: 0px;
+  height: 0px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: transparent;
+}
+
+/* Hide scrollbar — Firefox */
+* {
+  scrollbar-width: none; /* hides */
+  scrollbar-color: transparent transparent;
+}
+
+/* Hide scrollbar — IE/old Edge */
+* {
+  -ms-overflow-style: none;
+}

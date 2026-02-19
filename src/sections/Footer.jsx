@@ -38,7 +38,7 @@ const Footer = () => {
       <img
         src={WrittenLogo}
         alt="Written Logo"
-        className="mx-auto mt-16 scale-75"
+        className="mx-auto mt-16 h-[100px] md:h-[150px]"
       />
     </div>
   );

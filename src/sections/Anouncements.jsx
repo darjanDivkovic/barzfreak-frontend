@@ -53,7 +53,7 @@ const Anouncements = () => {
     <div>
       <div className="ml-5 mt-[15vh] min-h-[100vh]">
         <div className="opacity-20">
-          <h1 className="text-[1rem] leading-tight text-white">
+          <h1 className="text-[1rem] leading-tight text-white md:pl-[20%]">
             {sectionTitle}
           </h1>
         </div>
