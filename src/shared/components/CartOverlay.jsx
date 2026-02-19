@@ -1,22 +1,19 @@
 import { useEffect, useMemo, useState } from "react";
 import { useCartStore } from "../../store/cartStore";
-
-// adjust path to where you put it
 import OrderForm from "./OrderForm";
 
 const CartOverlay = ({ open, onClose }) => {
   const items = useCartStore((s) => s.items);
   const totalPrice = useCartStore((s) => s.totalPrice);
 
+  console.log("items", items);
+
   const updateQuantity = useCartStore((s) => s.updateQuantity);
   const removeItem = useCartStore((s) => s.removeItem);
   const clearCart = useCartStore((s) => s.clearCart);
 
-  // mount/unmount for exit animation
   const [mounted, setMounted] = useState(false);
   const [visible, setVisible] = useState(false);
-
-  // show form only after clicking "Order Now"
   const [showOrderForm, setShowOrderForm] = useState(false);
 
   useEffect(() => {
@@ -32,12 +29,10 @@ const CartOverlay = ({ open, onClose }) => {
     }
   }, [open]);
 
-  // reset form step when closing
   useEffect(() => {
     if (!open) setShowOrderForm(false);
   }, [open]);
 
-  // ESC to close
   useEffect(() => {
     if (!mounted) return;
 
@@ -56,10 +51,7 @@ const CartOverlay = ({ open, onClose }) => {
     }).format(totalPrice || 0);
   }, [totalPrice]);
 
-  const checkout = () => {
-    // step into order form
-    setShowOrderForm(true);
-  };
+  const checkout = () => setShowOrderForm(true);
 
   if (!mounted) return null;
 
@@ -67,8 +59,8 @@ const CartOverlay = ({ open, onClose }) => {
     <div
       className={`
         fixed inset-0 z-[999]
-        h-[100vh]
-        transition-all duration-200 ease-out
+        h-[100dvh]
+        transition-opacity duration-200 ease-out
         ${visible ? "opacity-100" : "opacity-0"}
       `}
     >
@@ -86,11 +78,14 @@ const CartOverlay = ({ open, onClose }) => {
       {/* Drawer */}
       <div
         className={`
-          absolute right-0 top-0 h-full w-full sm:w-[420px]
+          absolute right-0 top-0
+          w-full sm:w-[420px]
+          h-[100dvh]
           bg-white/10 backdrop-blur-xl
           shadow-[0_20px_60px_rgba(0,0,0,0.55)]
-          transition-all duration-200 ease-out
+          transition-transform duration-200 ease-out
           ${visible ? "translate-x-0" : "translate-x-6"}
+          flex flex-col
         `}
         onClick={(e) => e.stopPropagation()}
       >
@@ -124,8 +119,7 @@ const CartOverlay = ({ open, onClose }) => {
         </div>
 
         {/* Body */}
-        <div className="px-5 py-4 h-[calc(100%-200px)] overflow-auto">
-          {/* STEP 2: order form */}
+        <div className="px-5 py-4 flex-1 overflow-auto">
           {showOrderForm ? (
             <div className="space-y-3">
               <button
@@ -139,7 +133,6 @@ const CartOverlay = ({ open, onClose }) => {
               <OrderForm />
             </div>
           ) : (
-            // STEP 1: cart list
             <>
               {items.length === 0 ? (
                 <div className="mt-10 text-center text-white/70">
@@ -159,7 +152,6 @@ const CartOverlay = ({ open, onClose }) => {
                         bg-white/5 border border-white/10
                       "
                     >
-                      {/* optional image */}
                       <div className="h-14 w-14 rounded-xl bg-white/10 border border-white/10 overflow-hidden flex items-center justify-center">
                         {item.image ? (
                           <img
@@ -194,7 +186,6 @@ const CartOverlay = ({ open, onClose }) => {
                           </button>
                         </div>
 
-                        {/* Qty controls */}
                         <div className="mt-3 flex items-center justify-between">
                           <div className="flex items-center gap-2">
                             <button
@@ -207,7 +198,6 @@ const CartOverlay = ({ open, onClose }) => {
                                 text-white
                                 transition
                               "
-                              aria-label="Decrease quantity"
                             >
                               −
                             </button>
@@ -226,7 +216,6 @@ const CartOverlay = ({ open, onClose }) => {
                                 text-white
                                 transition
                               "
-                              aria-label="Increase quantity"
                             >
                               +
                             </button>
@@ -249,13 +238,12 @@ const CartOverlay = ({ open, onClose }) => {
         </div>
 
         {/* Footer */}
-        <div className="px-5 py-4 border-t border-white/10">
+        <div className="px-5 py-4 border-t border-white/10 pb-[calc(env(safe-area-inset-bottom)+16px)]">
           <div className="flex items-center justify-between mb-3">
             <p className="text-white/70">Total</p>
             <p className="text-white font-semibold">{formattedTotal}</p>
           </div>
 
-          {/* hide cart buttons when in form step */}
           {!showOrderForm && (
             <div className="flex gap-2">
               <button

@@ -46,13 +46,15 @@ function MerchCard({ item }) {
 
   const handleAddToCart = () => {
     const selected = {
-      name: itemName, // ← translated name goes to cart
+      id: `${item.key}-${color}`,
+      key: item.key,
+      name: itemName,
       color: color === "black" ? colorBlackLabel : colorWhiteLabel,
       price: item.price,
       oldPrice: item.oldPrice,
       image: imageSrc,
     };
-    console.log("Adding to cart:", selected);
+
     addItem(selected);
   };
 
