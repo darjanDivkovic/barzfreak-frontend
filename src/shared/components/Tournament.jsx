@@ -54,7 +54,7 @@ function Tournament({ tournament, onImageClick }) {
         </div>
       </div>
 
-      <p className="mt-5 w-[80%] whitespace-pre-line opacity-80">
+      <p className="mt-5 w-[80%] whitespace-pre-line opacity-80 text-sm">
         {tournament?.description}
       </p>
 
