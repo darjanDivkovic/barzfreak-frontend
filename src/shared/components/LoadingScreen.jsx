@@ -1,32 +1,37 @@
 // src/shared/components/LoadingScreen.jsx
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 
 import Bosna from "../../../public/assets/flags/Bosna.png";
 import America from "../../../public/assets/flags/America.png";
 
 const LANGUAGE_KEY = "preferredLanguage";
-const FADE_DURATION = 600; // ms — keep in sync with CSS transition
+const FADE_DURATION = 600; // ms
+
+const getInitialPhase = () => {
+  try {
+    const saved = localStorage.getItem(LANGUAGE_KEY);
+    return saved ? "loading" : "picker";
+  } catch {
+    // if localStorage is blocked for some reason, just show loader
+    return "loading";
+  }
+};
 
 const LoadingScreen = () => {
-  const [phase, setPhase] = useState("initial"); // "initial" | "loading" | "picker" | "fading"
+  const [phase, setPhase] = useState(getInitialPhase); // "loading" | "picker" | "fading"
   const [selectedLang, setSelectedLang] = useState(null);
+  const [hidden, setHidden] = useState(false);
 
+  // Returning visitor → show loader briefly → fade out
   useEffect(() => {
-    const savedLang = localStorage.getItem(LANGUAGE_KEY);
+    if (phase !== "loading") return;
 
-    if (savedLang) {
-      // Returning visitor → show loader briefly → fade out
-      setPhase("loading");
-      const timer = setTimeout(() => {
-        setPhase("fading");
-      }, 1200);
+    const t = setTimeout(() => {
+      setPhase("fading");
+    }, 1200);
 
-      return () => clearTimeout(timer);
-    } else {
-      // First visit → show language picker immediately
-      setPhase("picker");
-    }
-  }, []);
+    return () => clearTimeout(t);
+  }, [phase]);
 
   const handleSelect = (lang) => {
     localStorage.setItem(LANGUAGE_KEY, lang);
@@ -34,31 +39,22 @@ const LoadingScreen = () => {
     setPhase("fading");
   };
 
-  // After fade-out animation finishes → fully remove from DOM
   const handleFadeEnd = () => {
     if (phase === "fading") {
-      // Here you would normally trigger language change globally
-      // (i18n.changeLanguage(selectedLang), context, redux, window.location.reload(), etc.)
-      console.log(
-        "Language finalized →",
-        selectedLang || localStorage.getItem(LANGUAGE_KEY),
-      );
-
-      // The component can now be safely unmounted by parent
-      // (or if it's always rendered, we just hide it forever)
+      // language is now finalized (savedLang or selectedLang)
+      // console.log("Language finalized →", selectedLang || localStorage.getItem(LANGUAGE_KEY));
+      setHidden(true); // unmount completely so it never blocks clicks again
     }
   };
 
-  if (phase === "initial") return null;
+  if (hidden) return null;
 
   return (
     <div
-      className={`
-        fixed inset-0 z-[9999] flex items-center justify-center
-        bg-black text-white
-        transition-opacity duration-${FADE_DURATION}ms ease-in-out
-        ${phase === "fading" ? "opacity-0 pointer-events-none" : "opacity-100"}
-      `}
+      className={`fixed inset-0 z-[9999] flex items-center justify-center bg-black text-white transition-opacity ease-in-out ${
+        phase === "fading" ? "opacity-0 pointer-events-none" : "opacity-100"
+      }`}
+      style={{ transitionDuration: `${FADE_DURATION}ms` }}
       onTransitionEnd={handleFadeEnd}
     >
       {phase === "picker" ? (
@@ -67,43 +63,27 @@ const LoadingScreen = () => {
             Odaberite jezik / Choose language
           </h2>
 
-          <div className="flex flex sm:flex-row gap-8 justify-center items-center">
+          <div className="flex sm:flex-row gap-8 justify-center items-center">
             <button
               onClick={() => handleSelect("bs")}
-              className="
-                group flex flex-col items-center gap-3
-                min-w-[140px] px-8 py-6
-                bg-white/10 backdrop-blur-sm
-                rounded-2xl text-base font-medium
-                hover:bg-white/20 hover:scale-105 hover:shadow-xl
-                active:scale-95
-                transition-all duration-300
-              "
+              className="group flex flex-col items-center gap-3 min-w-[140px] px-8 py-6 bg-white/10 backdrop-blur-sm rounded-2xl text-base font-medium hover:bg-white/20 hover:scale-105 hover:shadow-xl active:scale-95 transition-all duration-300"
             >
               <img
                 src={Bosna}
                 alt="Bosnia and Herzegovina flag"
-                className="w-16 h-12 object-cover rounded shadow-md group-hover:scale-110 transition-transform"
+                className="scale-70 w-16 h-12 object-cover rounded shadow-md group-hover:scale-110 transition-transform"
               />
               Bosanski
             </button>
 
             <button
               onClick={() => handleSelect("en")}
-              className="
-                group flex flex-col items-center gap-3
-                min-w-[140px] px-8 py-6
-                bg-white/10 backdrop-blur-sm
-                rounded-2xl text-base
-                hover:bg-white/20 hover:scale-105 hover:shadow-xl
-                active:scale-95
-                transition-all duration-300
-              "
+              className="group flex flex-col items-center gap-3 min-w-[140px] px-8 py-6 bg-white/10 backdrop-blur-sm rounded-2xl text-base font-medium hover:bg-white/20 hover:scale-105 hover:shadow-xl active:scale-95 transition-all duration-300"
             >
               <img
                 src={America}
                 alt="USA flag"
-                className="w-16 h-12 object-cover rounded shadow-md group-hover:scale-110 transition-transform"
+                className="scale-70 w-16 h-12 object-cover rounded shadow-md group-hover:scale-110 transition-transform"
               />
               English
             </button>
