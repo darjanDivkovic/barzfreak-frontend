@@ -1,6 +1,7 @@
 // src/App.jsx
 import { useEffect, useState } from "react";
 import { ReactLenis } from "lenis/react";
+import { Analytics } from "@vercel/analytics/react";
 
 import Hero from "./sections/Hero";
 import Shop from "./sections/Shop";
@@ -39,6 +40,7 @@ function App() {
         <Footer />
 
         <CartOverlay open={isCartOpen} onClose={() => setIsCartOpen(false)} />
+        <Analytics />
       </div>
     </LanguageProvider>
   );
