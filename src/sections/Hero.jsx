@@ -9,6 +9,7 @@ import { translations } from "../i18n/translations";
 const Hero = () => {
   const { lang } = useLanguage();
   const t = translations[lang]?.hero;
+
   return (
     <div className="relative h-[100vh] flex flex-col items-center pt-[5vh] overflow-hidden">
       <FireSparksBackground />

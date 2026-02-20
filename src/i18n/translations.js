@@ -24,9 +24,9 @@ export const translations = {
 
   bs: {
     hero: {
-      line1: "Iskovan u borbi. Odgojen na betonu.",
-      line2: "Hranjen bolom. Ne slomljen strahom.",
-      line3: "Bez komfora. Bez kompromisa.",
+      line1: "Forged in struggle. Raised on concrete.",
+      line2: "Fueled by pain. Unbroken by fear.",
+      line3: "No comfort. No compromise.",
     },
     shop: {
       gender: "Muškarac/Žena", // or "Unisex" → "Unisex" if you prefer

@@ -42,7 +42,6 @@ const LoadingScreen = () => {
   const handleFadeEnd = () => {
     if (phase === "fading") {
       // language is now finalized (savedLang or selectedLang)
-      // console.log("Language finalized →", selectedLang || localStorage.getItem(LANGUAGE_KEY));
       setHidden(true); // unmount completely so it never blocks clicks again
     }
   };
