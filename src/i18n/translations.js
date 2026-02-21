@@ -18,6 +18,9 @@ export const translations = {
         {
           name: "Hoodie",
         },
+        {
+          name: "Pants",
+        },
       ],
     },
   },
@@ -38,6 +41,9 @@ export const translations = {
         },
         {
           name: "Dukserica",
+        },
+        {
+          name: "Trenerka",
         },
       ],
     },

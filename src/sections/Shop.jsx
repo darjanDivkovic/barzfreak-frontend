@@ -5,6 +5,8 @@ import TShirtBlack from "../../public/assets/merch/TShirtBlack.png";
 import TShirtWhite from "../../public/assets/merch/TShirtWhite.png";
 import HoodieBlack from "../../public/assets/merch/HoodieBlack.png";
 import HoodieWhite from "../../public/assets/merch/HoodieWhite.png";
+import PantsBlack from "../../public/assets/merch/PantsBlack.png";
+import PantsWhite from "../../public/assets/merch/PantsWhite.png";
 
 import AddToCartButton from "../shared/components/AddToCartButton";
 import { useCartStore } from "../store/cartStore";
@@ -24,6 +26,13 @@ const merchItems = [
     whiteImage: HoodieWhite,
     price: 40,
     oldPrice: 70,
+  },
+  {
+    key: "pants",
+    blackImage: PantsBlack,
+    whiteImage: PantsWhite,
+    price: 40,
+    oldPrice: 65,
   },
 ];
 
