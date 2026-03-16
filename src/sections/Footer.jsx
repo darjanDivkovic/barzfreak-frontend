@@ -2,45 +2,45 @@ import WrittenLogo from "../../public/assets/WrittenLogo.png";
 import Instagram from "../../public/assets/icons/Instagram.svg";
 import TikTok from "../../public/assets/icons/TikTok.svg";
 import YouTube from "../../public/assets/icons/YouTube.svg";
+import MemberInline from "../shared/components/MemberInline";
 
 const Footer = () => {
   return (
-    <div className="h-[500px] mt-[10vh]">
-      <h1 className="mx-5 text-2xl mt-5 text-center mt-16">BUILT FOR</h1>
-      <h1 className="mx-5 text-2xl mt-[-2px] text-center text-[#A40000]">
-        THE BARZ
-      </h1>
+    <footer className="border-t border-white/8 mt-20">
+      <div className="mx-auto max-w-5xl px-6 py-16">
+        <div className="flex flex-col md:flex-row justify-between gap-12">
+          {/* Brand */}
+          <div>
+            <h2 className="text-2xl font-bold">BUILT FOR</h2>
+            <h2 className="text-2xl font-bold text-[#a40000]">THE BARZ</h2>
 
-      <div className="flex items-center justify-center mt-15 opacity-60">
-        <a href="https://www.instagram.com/barzfreak.official/" target="blank">
-          <img
-            src={Instagram}
-            alt="Instagram Icon"
-            className="mx-5 h-8 inline-block"
-          />
-        </a>
-        <a href="www.tiktok.com/@barzfreak.official" target="blank">
-          <img
-            src={TikTok}
-            alt="TikTok Icon"
-            className="mx-5 h-8 inline-block"
-          />
-        </a>
-        <a href="www.youtube.com/@Barzfreak.official" target="blank">
-          <img
-            src={YouTube}
-            alt="YouTube Icon"
-            className="mx-5 h-8 inline-block"
-          />
-        </a>
+            <div className="flex items-center gap-4 mt-6 opacity-50">
+              <a href="https://www.instagram.com/barzfreak.official/" target="_blank" rel="noreferrer">
+                <img src={Instagram} alt="Instagram" className="h-6" />
+              </a>
+              <a href="https://www.tiktok.com/@barzfreak.official" target="_blank" rel="noreferrer">
+                <img src={TikTok} alt="TikTok" className="h-6" />
+              </a>
+              <a href="https://www.youtube.com/@Barzfreak.official" target="_blank" rel="noreferrer">
+                <img src={YouTube} alt="YouTube" className="h-6" />
+              </a>
+            </div>
+          </div>
+
+          {/* Inline signup */}
+          <div className="md:max-w-xs w-full">
+            <MemberInline />
+          </div>
+        </div>
+
+        <div className="mt-16 flex flex-col md:flex-row items-center justify-between gap-4">
+          <img src={WrittenLogo} alt="BarzFreak" className="h-10 opacity-30" />
+          <p className="text-white/20 text-[11px] uppercase tracking-[0.15em]">
+            © {new Date().getFullYear()} BarzFreak
+          </p>
+        </div>
       </div>
-
-      <img
-        src={WrittenLogo}
-        alt="Written Logo"
-        className="mx-auto mt-16 h-[100px] md:h-[150px]"
-      />
-    </div>
+    </footer>
   );
 };
 

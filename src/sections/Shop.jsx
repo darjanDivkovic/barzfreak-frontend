@@ -1,5 +1,7 @@
 // src/sections/Shop.jsx
-import { useTranslation } from "../i18n/useTranslation"; // ← new
+import { useTranslation } from "../i18n/useTranslation";
+import { useLanguage } from "../context/LanguageContext";
+import { translations } from "../i18n/translations";
 
 import TShirtBlack from "../../public/assets/merch/TShirtBlack.png";
 import TShirtWhite from "../../public/assets/merch/TShirtWhite.png";
@@ -14,7 +16,7 @@ import { useState } from "react";
 
 const merchItems = [
   {
-    key: "tshirt", // ← internal key (not displayed)
+    key: "tshirt",
     blackImage: TShirtBlack,
     whiteImage: TShirtWhite,
     price: 22,
@@ -37,13 +39,12 @@ const merchItems = [
 ];
 
 function MerchCard({ item }) {
-  const { t } = useTranslation(); // ← now we can translate
+  const { t } = useTranslation();
   const [color, setColor] = useState("black");
   const addItem = useCartStore((state) => state.addItem);
 
   const imageSrc = color === "black" ? item.blackImage : item.whiteImage;
 
-  // Translated names & labels
   const itemName = t(
     `shop.items.${merchItems.findIndex((i) => i.key === item.key)}.name`,
   );
@@ -52,9 +53,10 @@ function MerchCard({ item }) {
   const colorWhiteLabel = t("shop.colorWhite");
 
   const altText = `${itemName} ${color === "black" ? colorBlackLabel : colorWhiteLabel}`;
+  const discount = Math.round((1 - item.price / item.oldPrice) * 100);
 
   const handleAddToCart = () => {
-    const selected = {
+    addItem({
       id: `${item.key}-${color}`,
       key: item.key,
       name: itemName,
@@ -62,35 +64,30 @@ function MerchCard({ item }) {
       price: item.price,
       oldPrice: item.oldPrice,
       image: imageSrc,
-    };
-
-    addItem(selected);
+    });
   };
 
   return (
-    <div className="rounded-xl">
-      <div className="w-full h-[300px] relative">
+    <div className="group border border-white/8 rounded-2xl overflow-hidden bg-white/[0.02] hover:border-white/15 transition-colors duration-300">
+      {/* Image */}
+      <div className="relative overflow-hidden bg-white/5 aspect-[3/4]">
         <img
           src={imageSrc}
           alt={altText}
-          className="w-full h-full object-cover rounded-xl"
+          className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
         />
-      </div>
-
-      <div className="flex items-center justify-between mt-2">
-        <div>
-          <p className="opacity-40">{genderLabel}</p>
-          <h1 className="text-2xl">{itemName}</h1>
-        </div>
-
-        <div className="flex gap-4">
+        {/* Sale badge */}
+        <span className="absolute top-3 left-3 bg-[#a40000] text-white text-[10px] uppercase tracking-widest font-semibold px-2.5 py-1 rounded-full">
+          -{discount}%
+        </span>
+        {/* Color preview overlay on hover */}
+        <div className="absolute bottom-3 right-3 flex gap-1.5">
           <ColorButton
             color="black"
-            label={colorBlackLabel} // optional: could show text too
+            label={colorBlackLabel}
             isSelected={color === "black"}
             onClick={() => setColor("black")}
           />
-
           <ColorButton
             color="white"
             label={colorWhiteLabel}
@@ -100,55 +97,59 @@ function MerchCard({ item }) {
         </div>
       </div>
 
-      <h1 className="text-5xl mt-5 mb-12">
-        {item.price}KM{" "}
-        <span className="text-2xl text-white/50 line-through decoration-2 decoration-red-500 opacity-70">
-          {item.oldPrice}KM
-        </span>
-      </h1>
+      {/* Info */}
+      <div className="p-5">
+        <p className="text-[10px] uppercase tracking-[0.2em] text-white/30 font-medium mb-1">
+          {genderLabel}
+        </p>
+        <h3 className="text-[1.15rem] font-semibold tracking-tight">{itemName}</h3>
 
-      <AddToCartButton onAdd={handleAddToCart} />
+        <div className="flex items-end gap-3 mt-3">
+          <span className="text-[1.8rem] font-bold leading-none">{item.price} KM</span>
+          <span className="text-[1rem] text-white/30 line-through decoration-[#a40000] mb-0.5">
+            {item.oldPrice} KM
+          </span>
+        </div>
+
+        <AddToCartButton onAdd={handleAddToCart} />
+      </div>
     </div>
   );
 }
 
-// Updated ColorButton – can show color name if you want (optional)
 function ColorButton({ color, isSelected, onClick, label }) {
-  const baseClasses = "w-6 h-6 rounded-full border-2 transition-all";
-
-  const selectedClasses =
-    color === "black"
-      ? "border-white bg-black shadow-lg scale-110"
-      : "border-gray-800 bg-white shadow-lg scale-110";
-
-  const defaultClasses =
-    color === "black"
-      ? "border-gray-400 bg-black opacity-70 hover:opacity-100"
-      : "border-gray-300 bg-white opacity-70 hover:opacity-100";
-
   return (
     <button
       onClick={onClick}
-      className={`${baseClasses} ${isSelected ? selectedClasses : defaultClasses}`}
+      title={label}
       aria-label={`Select ${label}`}
-      title={label} // tooltip on hover
+      className={`w-5 h-5 rounded-full border-2 transition-all duration-200 ${
+        isSelected ? "scale-110 border-white" : "border-white/30 opacity-60 hover:opacity-100"
+      } ${color === "black" ? "bg-zinc-900" : "bg-white"}`}
     />
-    // If you want to show text below buttons, add:
-    // <span className="text-xs mt-1 opacity-70">{label}</span>
   );
 }
 
 export default function Shop() {
+  const { lang } = useLanguage();
+  const t = translations[lang];
+  const label = lang === "bs" ? "PRODAVNICA" : "SHOP";
+
   return (
-    <div className="mx-4 flex flex-col md:flex-row gap-12 md:px-[150px] xl:px-[20%]">
-      {merchItems.map((item, index) => (
-        <div
-          key={item.key}
-          className={`w-full md:flex-1 ${index > 0 ? "mt-[7vh] md:mt-0" : ""}`}
-        >
-          <MerchCard item={item} />
-        </div>
-      ))}
-    </div>
+    <section className="mx-auto max-w-5xl px-6 py-20">
+      {/* Section header */}
+      <div className="flex items-center gap-4 mb-12">
+        <span className="text-[10px] uppercase tracking-[0.25em] text-white/20 font-medium">
+          {label}
+        </span>
+        <div className="flex-1 h-px bg-white/8" />
+      </div>
+
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        {merchItems.map((item) => (
+          <MerchCard key={item.key} item={item} />
+        ))}
+      </div>
+    </section>
   );
 }

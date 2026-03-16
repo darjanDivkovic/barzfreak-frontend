@@ -90,7 +90,7 @@ const LoadingScreen = () => {
         </div>
       ) : (
         <div className="flex flex-col items-center gap-8 animate-pulse">
-          <div className="w-80 h-2 bg-gray-700/50 rounded-full overflow-hidden">
+          <div className="w-80 h-2 bg-gray-700/50 rounded-full overflow-hidden scale-50">
             <div className="h-full bg-gradient-to-r from-white/40 to-white animate-[loading_2s_infinite]" />
           </div>
         </div>

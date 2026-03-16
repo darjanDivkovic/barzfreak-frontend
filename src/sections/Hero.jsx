@@ -1,6 +1,6 @@
-import Logo from "../../public/assets/Logo.svg";
-import BackgroundX from "../../public/assets/BackgroundX.svg";
-
+import { Link } from "react-router-dom";
+import { ArrowRight } from "lucide-react";
+import { Button } from "../components/ui/button";
 import FireSparksBackground from "../shared/components/FireSparksBackground";
 import SwipeUp from "../shared/components/SwipeUp";
 import { useLanguage } from "../context/LanguageContext";
@@ -8,45 +8,77 @@ import { translations } from "../i18n/translations";
 
 const Hero = () => {
   const { lang } = useLanguage();
-  const t = translations[lang]?.hero;
+  const t = translations[lang];
 
   return (
-    <div className="relative h-[100vh] flex flex-col items-center pt-[5vh] overflow-hidden">
+    <section className="relative h-[100vh] overflow-hidden">
       <FireSparksBackground />
 
-      {/* The rising reddish sparks */}
+      <div className="relative z-10 mx-auto max-w-5xl px-6 h-full flex items-center justify-center pt-16">
+        <div className="relative z-10 mx-auto max-w-xl text-center lg:w-3/4">
+          <Link
+            to="/shop"
+            className="rounded-lg mx-auto flex w-fit items-center gap-2 border border-white/15 bg-white/5 p-1 pr-3 mb-10"
+          >
+            <span className="bg-[#a40000] rounded-[calc(var(--radius)-0.25rem)] px-2 py-1 text-[10px] uppercase tracking-widest font-semibold text-white">
+              New
+            </span>
+            <span className="text-[12px] text-white/60 uppercase tracking-[0.1em]">
+              {t?.hero?.button1}
+            </span>
+            <span className="block h-4 w-px bg-white/15" />
+            <ArrowRight className="size-4 text-white/40" />
+          </Link>
 
-      <img
-        src={Logo}
-        alt="BarzFreak Logo"
-        className="relative scale-70 z-10 xl:scale-90"
-      />
+          <h1 className="text-[3.4rem] xl:text-[5.5rem] leading-none tracking-tight">
+            BUILT FOR
+          </h1>
+          <h1 className="text-[3.6rem] xl:text-[5.8rem] leading-none tracking-tight mt-1 text-[#a40000] drop-shadow-[0_0_40px_rgba(164,0,0,0.45)]">
+            THE BARZ
+          </h1>
 
-      <h1 className="mt-[10vh] text-[3.4rem] xl:text-[6rem] relative z-10">
-        BUILT FOR
-      </h1>
-      <h1 className="text-[3.6rem] xl:text-[6.2rem] mt-[-25px] red-secondary relative z-10">
-        THE BARZ
-      </h1>
+          <p className="mt-6 text-white/80 text-[13px]/[22px] xl:text-[14px]/[24px] w-full mx-auto">
+            <span className="font-bold">{t?.hero?.line1}</span>
+            <br />
+            <span className="text-white/60">
+              {t?.hero?.line2} {t?.hero?.line3}
+            </span>
+          </p>
 
-      <p className="mt-4 text-center px-8 gray-secondary text-[14px]/[17px] xl:text-[15px]/[20px] relative z-10">
-        {t.line1}
-        <br />
-        {t.line2}
-        <br />
-        {t.line3}
-      </p>
+          <div className="mt-9 flex flex-col gap-3 sm:flex-row justify-center">
+            <Button
+              asChild
+              className="px-8 text-[11px] uppercase tracking-[0.14em] font-semibold h-11"
+            >
+              <Link to="/shop">{t?.about?.cta1}</Link>
+            </Button>
+            <Button
+              variant="outline"
+              asChild
+              className="px-8 text-[11px] uppercase tracking-[0.14em] font-semibold h-11"
+            >
+              <Link to="/about">{t?.about?.cta2}</Link>
+            </Button>
+          </div>
 
-      <div className="absolute bottom-10">
-        <SwipeUp />
+          <ul className="mt-8 space-y-2 text-white/30 text-[11px] uppercase tracking-[0.15em] font-medium">
+            <li className="flex items-center gap-2 justify-center">
+              <span className="text-[#a40000]">—</span> {t?.about?.text1}
+            </li>
+            <li className="flex items-center gap-2 justify-center">
+              <span className="text-[#a40000]">—</span> {t?.about?.text2}
+            </li>
+            <li className="flex items-center gap-2 justify-center">
+              <span className="text-[#a40000]">—</span> {t?.about?.text3}
+            </li>
+          </ul>
+        </div>
       </div>
 
-      <img
-        src={BackgroundX}
-        alt="Background X"
-        className="absolute bottom-0 z-0"
-      />
-    </div>
+      <div className="absolute bottom-10 left-1/2 -translate-x-1/2 z-10">
+        <SwipeUp />
+      </div>
+    </section>
   );
 };
 

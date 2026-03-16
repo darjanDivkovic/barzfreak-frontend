@@ -1,48 +1,25 @@
-// src/App.jsx
-import { useEffect, useState } from "react";
-import { ReactLenis } from "lenis/react";
-import { Analytics } from "@vercel/analytics/react";
-
-import Hero from "./sections/Hero";
-import Shop from "./sections/Shop";
-import Anouncements from "./sections/Anouncements";
-import ShopWidget from "./shared/components/ShopWidget";
-import CartOverlay from "./shared/components/CartOverlay";
-import Footer from "./sections/Footer";
-
-import LoadingScreen from "./shared/components/LoadingScreen";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { LanguageProvider } from "./context/LanguageContext";
+import Layout from "./layouts/Layout";
+import HomePage from "./pages/HomePage";
+import ShopPage from "./pages/ShopPage";
+import NewsPage from "./pages/NewsPage";
+import AboutPage from "./pages/AboutPage";
 
 function App() {
-  const [isCartOpen, setIsCartOpen] = useState(false);
-
-  // Optional: lock body scroll when cart is open
-  useEffect(() => {
-    document.body.style.overflow = isCartOpen ? "hidden" : "";
-    return () => {
-      document.body.style.overflow = "";
-    };
-  }, [isCartOpen]);
-
   return (
-    <LanguageProvider>
-      <div className="relative min-h-screen">
-        <ReactLenis root options={{ duration: 1.2, smoothWheel: true }} />
-        <LoadingScreen />
-        <main>
-          <Hero />
-          <Shop />
-          <Anouncements />
-        </main>
-
-        <ShopWidget onClick={() => setIsCartOpen(true)} />
-
-        <Footer />
-
-        <CartOverlay open={isCartOpen} onClose={() => setIsCartOpen(false)} />
-        <Analytics />
-      </div>
-    </LanguageProvider>
+    <BrowserRouter>
+      <LanguageProvider>
+        <Layout>
+          <Routes>
+            <Route path="/" element={<HomePage />} />
+            <Route path="/shop" element={<ShopPage />} />
+            <Route path="/news" element={<NewsPage />} />
+            <Route path="/about" element={<AboutPage />} />
+          </Routes>
+        </Layout>
+      </LanguageProvider>
+    </BrowserRouter>
   );
 }
 
