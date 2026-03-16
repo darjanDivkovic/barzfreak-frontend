@@ -1,14 +1,17 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import { ArrowRight } from "lucide-react";
 import { Button } from "../components/ui/button";
 import FireSparksBackground from "../shared/components/FireSparksBackground";
 import SwipeUp from "../shared/components/SwipeUp";
+import MemberModal from "../shared/components/MemberModal";
 import { useLanguage } from "../context/LanguageContext";
 import { translations } from "../i18n/translations";
 
 const Hero = () => {
   const { lang } = useLanguage();
   const t = translations[lang];
+  const [memberModalOpen, setMemberModalOpen] = useState(false);
 
   return (
     <section className="relative h-[100vh] overflow-hidden">
@@ -45,12 +48,17 @@ const Hero = () => {
             </span>
           </p>
 
+          <MemberModal
+            open={memberModalOpen}
+            onClose={() => setMemberModalOpen(false)}
+          />
+
           <div className="mt-9 flex flex-col gap-3 sm:flex-row justify-center">
             <Button
-              asChild
+              onClick={() => setMemberModalOpen(true)}
               className="px-8 text-[11px] uppercase tracking-[0.14em] font-semibold h-11"
             >
-              <Link to="/shop">{t?.about?.cta1}</Link>
+              {t?.member?.cta}
             </Button>
             <Button
               variant="outline"
@@ -61,7 +69,7 @@ const Hero = () => {
             </Button>
           </div>
 
-          <ul className="mt-8 space-y-2 text-white/30 text-[11px] uppercase tracking-[0.15em] font-medium">
+          <ul className="hidden sm:block mt-8 space-y-2 text-white/30 text-[11px] uppercase tracking-[0.15em] font-medium">
             <li className="flex items-center gap-2 justify-center">
               <span className="text-[#a40000]">—</span> {t?.about?.text1}
             </li>
