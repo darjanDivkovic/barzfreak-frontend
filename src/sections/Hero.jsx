@@ -33,10 +33,10 @@ const Hero = () => {
             <ArrowRight className="size-4 text-white/40" />
           </Link>
 
-          <h1 className="text-[3.4rem] xl:text-[5.5rem] leading-none tracking-tight scale-75">
+          <h1 className="text-[3.4rem] xl:text-[5.5rem] scale-75 pb-2">
             BUILT FOR
           </h1>
-          <h1 className="text-[3.6rem] xl:text-[6.8rem] font-bold mt-[-50px] text-[#a40000] drop-shadow-[0_0_40px_rgba(164,0,0,0.45)] scale-90 mt-[-10px]">
+          <h1 className="text-[3.6rem] xl:text-[6.8rem] font-bold mt-[-50px] text-[#a40000] drop-shadow-[0_0_40px_rgba(164,0,0,0.45)] scale-90">
             THE BARZ
           </h1>
 
