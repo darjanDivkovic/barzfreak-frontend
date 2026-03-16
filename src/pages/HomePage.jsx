@@ -8,8 +8,8 @@ const HomePage = () => {
     <>
       <Hero />
       <WhoWeAre />
-      <Shop />
       <Anouncements />
+      <Shop />
     </>
   );
 };

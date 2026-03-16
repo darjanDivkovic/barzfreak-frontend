@@ -18,12 +18,12 @@ const Hero = () => {
       <FireSparksBackground />
 
       <div className="relative z-10 mx-auto max-w-5xl px-6 h-full flex items-center justify-center pt-16">
-        <div className="relative z-10 mx-auto max-w-xl text-center lg:w-3/4">
+        <div className="relative z-10 mx-auto max-w-2xl text-center">
           <Link
             to="/shop"
             className="rounded-lg mx-auto flex w-fit items-center gap-2 border border-white/15 bg-white/5 p-1 pr-3 mb-10"
           >
-            <span className="bg-[#a40000] rounded-[calc(var(--radius)-0.25rem)] px-2 py-1 text-[10px] uppercase tracking-widest font-semibold text-white">
+            <span className="bg-[#a40000] rounded-md px-2 py-1 text-[10px] uppercase tracking-widest font-semibold text-white">
               New
             </span>
             <span className="text-[12px] text-white/60 uppercase tracking-[0.1em]">
@@ -33,10 +33,16 @@ const Hero = () => {
             <ArrowRight className="size-4 text-white/40" />
           </Link>
 
-          <h1 className="text-[3.4rem] xl:text-[5.5rem] leading-none tracking-tight">
-            BUILT FOR
+          <h1
+            className="text-[3.4rem] xl:text-[5.5rem] leading-none tracking-tight scale-75"
+            style={{ fontFamily: "'Rock Salt', cursive" }}
+          >
+            BUILT <br /> FOR
           </h1>
-          <h1 className="text-[3.6rem] xl:text-[5.8rem] leading-none tracking-tight mt-1 text-[#a40000] drop-shadow-[0_0_40px_rgba(164,0,0,0.45)]">
+          <h1
+            className="text-[3.6rem] xl:text-[5.8rem] font-bold mt-1 text-[#a40000] drop-shadow-[0_0_40px_rgba(164,0,0,0.45)] scale-90 mt-[-10px]"
+            style={{ fontFamily: "'Rock Salt', cursive" }}
+          >
             THE BARZ
           </h1>
 

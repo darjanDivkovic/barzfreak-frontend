@@ -26,7 +26,7 @@ const Nav = () => {
       <header>
         <nav
           data-state={menuState ? "active" : undefined}
-          className="group fixed z-20 w-full border-b border-dashed border-white/10 bg-[#050505]/85 backdrop-blur-md"
+          className="group fixed z-100 w-full border-b border-dashed border-white/10 bg-[#050505]/85 backdrop-blur-md"
         >
           <div className="m-auto max-w-5xl px-6">
             <div className="flex flex-wrap items-center justify-between gap-6 py-3 lg:gap-0 lg:py-4">

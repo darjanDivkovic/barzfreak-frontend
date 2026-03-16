@@ -8,9 +8,12 @@ const supabase = createClient(
   import.meta.env.VITE_SUPABASE_PUBLISHABLE_DEFAULT_KEY,
 );
 
+const PAGE_SIZE = 4;
+
 const Anouncements = () => {
   const [tournaments, setTournaments] = useState([]);
   const [selectedImage, setSelectedImage] = useState(null);
+  const [showAll, setShowAll] = useState(false);
   const { lang } = useLanguage();
   const isBosnian = lang === "bs";
 
@@ -43,14 +46,20 @@ const Anouncements = () => {
     ? "Nema turnira za prikaz"
     : "No tournaments available";
 
+  const featured = tournaments[0];
+  const rest = tournaments.slice(1);
+  const visibleRest = showAll ? rest : rest.slice(0, PAGE_SIZE);
+  const hasMore = !showAll && rest.length > PAGE_SIZE;
+
   return (
     <section className="mx-auto max-w-5xl px-6 py-20">
       {/* Section header */}
-      <div className="flex items-center gap-4 mb-16">
-        <span className="text-[10px] uppercase tracking-[0.25em] text-white/20 font-medium">
+      <div className="flex items-center gap-6 mb-16">
+        <div className="flex-1 h-px bg-white/15" />
+        <span className="text-[1.1rem] text-white/70 shrink-0" style={{ fontFamily: "'Rock Salt', cursive" }}>
           {sectionLabel}
         </span>
-        <div className="flex-1 h-px bg-white/8" />
+        <div className="flex-1 h-px bg-white/15" />
       </div>
 
       {tournaments.length === 0 ? (
@@ -58,15 +67,49 @@ const Anouncements = () => {
           {emptyMsg}
         </p>
       ) : (
-        <div className="flex flex-col gap-20">
-          {tournaments.map((tournament) => (
-            <Tournament
-              key={tournament.id}
-              tournament={tournament}
-              onImageClick={setSelectedImage}
-            />
-          ))}
-        </div>
+        <>
+          {/* Featured */}
+          <Tournament
+            key={featured.id}
+            tournament={featured}
+            featured
+            onImageClick={setSelectedImage}
+          />
+
+          {/* Grid */}
+          {rest.length > 0 && (
+            <>
+              <div className="flex items-center gap-6 mt-16 mb-10">
+                <div className="flex-1 h-px bg-white/15" />
+                <span className="text-[0.85rem] text-white/50 shrink-0" style={{ fontFamily: "'Rock Salt', cursive" }}>
+                  {isBosnian ? "Više vijesti" : "More news"}
+                </span>
+                <div className="flex-1 h-px bg-white/15" />
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-12">
+                {visibleRest.map((tournament) => (
+                  <Tournament
+                    key={tournament.id}
+                    tournament={tournament}
+                    onImageClick={setSelectedImage}
+                  />
+                ))}
+              </div>
+
+              {hasMore && (
+                <div className="flex justify-center mt-12">
+                  <button
+                    onClick={() => setShowAll(true)}
+                    className="border border-white/20 text-white/60 hover:text-white hover:border-white/40 transition px-8 py-3 text-[11px] uppercase tracking-[0.2em]"
+                  >
+                    {isBosnian ? "Prikaži sve" : "Show all"}
+                  </button>
+                </div>
+              )}
+            </>
+          )}
+        </>
       )}
 
       {/* Lightbox */}

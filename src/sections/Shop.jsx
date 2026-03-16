@@ -138,11 +138,12 @@ export default function Shop() {
   return (
     <section className="mx-auto max-w-5xl px-6 py-20">
       {/* Section header */}
-      <div className="flex items-center gap-4 mb-12">
-        <span className="text-[10px] uppercase tracking-[0.25em] text-white/20 font-medium">
+      <div className="flex items-center gap-6 mb-12">
+        <div className="flex-1 h-px bg-white/15" />
+        <span className="text-[1.1rem] text-white/70 shrink-0" style={{ fontFamily: "'Rock Salt', cursive" }}>
           {label}
         </span>
-        <div className="flex-1 h-px bg-white/8" />
+        <div className="flex-1 h-px bg-white/15" />
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
