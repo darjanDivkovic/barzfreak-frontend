@@ -1,12 +1,13 @@
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
-import { Menu, X } from "lucide-react";
+import { Menu, X, ShoppingBag } from "lucide-react";
 import { Button } from "../../components/ui/button";
 import { useLanguage } from "../../context/LanguageContext";
 import { translations } from "../../i18n/translations";
 import MemberModal from "./MemberModal";
 import LogoImg from "../../../public/assets/Logo.svg";
 import WrittenLogo from "../../../public/assets/WrittenLogo.png";
+import { useCartStore } from "../../store/cartStore";
 
 const menuItemKeys = [
   { key: "home", to: "/" },
@@ -14,6 +15,51 @@ const menuItemKeys = [
   { key: "news", to: "/news" },
   { key: "about", to: "/about" },
 ];
+
+const CartButton = ({ className = "" }) => {
+  const itemCount = useCartStore((s) => s.itemCount);
+  const openCart = useCartStore((s) => s.openCart);
+  const [bump, setBump] = useState(false);
+  const prevCount = useRef(itemCount);
+
+  useEffect(() => {
+    if (itemCount > prevCount.current) {
+      setBump(true);
+      const t = setTimeout(() => setBump(false), 400);
+      return () => clearTimeout(t);
+    }
+    prevCount.current = itemCount;
+  }, [itemCount]);
+
+  return (
+    <button
+      type="button"
+      onClick={openCart}
+      aria-label="Open cart"
+      style={{ transition: "transform 0.15s" }}
+      className={`relative flex items-center justify-center w-9 h-9 rounded-full text-white/60 hover:text-white hover:bg-white/10 transition-colors ${className}`}
+    >
+      <ShoppingBag
+        className="size-[18px]"
+        style={{
+          transform: bump ? "scale(1.35)" : "scale(1)",
+          transition: "transform 0.15s cubic-bezier(0.34,1.56,0.64,1)",
+        }}
+      />
+      {itemCount > 0 && (
+        <span
+          className="absolute -top-0.5 -right-0.5 min-w-[17px] h-[17px] px-1 rounded-full bg-[#a40000] text-white text-[9px] font-bold flex items-center justify-center leading-none"
+          style={{
+            transform: bump ? "scale(1.2)" : "scale(1)",
+            transition: "transform 0.15s cubic-bezier(0.34,1.56,0.64,1)",
+          }}
+        >
+          {itemCount}
+        </span>
+      )}
+    </button>
+  );
+};
 
 const Nav = () => {
   const [menuState, setMenuState] = useState(false);
@@ -35,6 +81,9 @@ const Nav = () => {
                   <img src={LogoImg} alt="BarzFreak" className="h-9 w-auto opacity-90" />
                   <img src={WrittenLogo} alt="Written Logo" className="mx-auto ml-5 h-[20px] md:h-[40px]" />
                 </Link>
+
+                {/* Cart icon — mobile only (always visible in top bar) */}
+                <CartButton className="lg:hidden" />
 
                 <button
                   onClick={() => setMenuState(!menuState)}
@@ -63,7 +112,9 @@ const Nav = () => {
                   </ul>
                 </div>
 
-                <div className="flex w-full flex-col space-y-3 sm:flex-row sm:gap-3 sm:space-y-0 md:w-fit lg:border-l lg:border-white/10 lg:pl-6">
+                <div className="flex w-full flex-col space-y-3 sm:flex-row sm:gap-3 sm:space-y-0 md:w-fit lg:border-l lg:border-white/10 lg:pl-6 lg:items-center">
+                  {/* Cart icon — desktop only (in menu section) */}
+                  <CartButton className="hidden lg:flex" />
                   <Button
                     size="sm"
                     onClick={() => { setMenuState(false); setModalOpen(true); }}

@@ -103,15 +103,24 @@ export const useCartStore = create(
           totalPrice: 0,
         }),
 
-      // Now these are just plain numbers (not functions)
       itemCount: 0,
       totalPrice: 0,
+
+      isCartOpen: false,
+      openCart: () => set({ isCartOpen: true }),
+      closeCart: () => set({ isCartOpen: false }),
     }),
     {
       name: "shopping-cart-storage",
       storage: createJSONStorage(() => localStorage),
       partialize: (state) => ({ items: state.items }),
       version: 1,
+      onRehydrateStorage: () => (state) => {
+        if (state?.items) {
+          state.itemCount = state.items.reduce((sum, i) => sum + i.quantity, 0);
+          state.totalPrice = state.items.reduce((sum, i) => sum + i.price * i.quantity, 0);
+        }
+      },
     },
   ),
 );

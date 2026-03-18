@@ -3,8 +3,9 @@ import { useCartStore } from "../../store/cartStore";
 
 import Market from "../../../public/assets/Market.svg";
 
-const ShopWidget = ({ onClick }) => {
+const ShopWidget = () => {
   const itemCount = useCartStore((state) => state.itemCount);
+  const openCart = useCartStore((state) => state.openCart);
 
   // keep mounted long enough to play exit animation
   const [mounted, setMounted] = useState(false);
@@ -26,7 +27,7 @@ const ShopWidget = ({ onClick }) => {
   return (
     <button
       type="button"
-      onClick={onClick}
+      onClick={openCart}
       className={`
         fixed bottom-5 right-5 z-50
         transition-all duration-200 ease-out

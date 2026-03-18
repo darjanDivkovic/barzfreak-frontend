@@ -1,4 +1,3 @@
-import { useState, useEffect } from "react";
 import { ReactLenis } from "lenis/react";
 import { Analytics } from "@vercel/analytics/react";
 import Nav from "../shared/components/Nav";
@@ -6,14 +5,11 @@ import Footer from "../sections/Footer";
 import ShopWidget from "../shared/components/ShopWidget";
 import CartOverlay from "../shared/components/CartOverlay";
 import LoadingScreen from "../shared/components/LoadingScreen";
+import { useCartStore } from "../store/cartStore";
 
 const Layout = ({ children }) => {
-  const [isCartOpen, setIsCartOpen] = useState(false);
-
-  useEffect(() => {
-    document.body.style.overflow = isCartOpen ? "hidden" : "";
-    return () => { document.body.style.overflow = ""; };
-  }, [isCartOpen]);
+  const isCartOpen = useCartStore((s) => s.isCartOpen);
+  const closeCart = useCartStore((s) => s.closeCart);
 
   return (
     <div className="relative min-h-screen">
@@ -22,8 +18,8 @@ const Layout = ({ children }) => {
       <Nav />
       <main>{children}</main>
       <Footer />
-      <ShopWidget onClick={() => setIsCartOpen(true)} />
-      <CartOverlay open={isCartOpen} onClose={() => setIsCartOpen(false)} />
+      <ShopWidget />
+      <CartOverlay open={isCartOpen} onClose={closeCart} />
       <Analytics />
     </div>
   );

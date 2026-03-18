@@ -43,8 +43,6 @@ function MerchCard({ item }) {
   const [color, setColor] = useState("black");
   const addItem = useCartStore((state) => state.addItem);
 
-  const imageSrc = color === "black" ? item.blackImage : item.whiteImage;
-
   const itemName = t(
     `shop.items.${merchItems.findIndex((i) => i.key === item.key)}.name`,
   );
@@ -52,7 +50,6 @@ function MerchCard({ item }) {
   const colorBlackLabel = t("shop.colorBlack");
   const colorWhiteLabel = t("shop.colorWhite");
 
-  const altText = `${itemName} ${color === "black" ? colorBlackLabel : colorWhiteLabel}`;
   const discount = Math.round((1 - item.price / item.oldPrice) * 100);
 
   const handleAddToCart = () => {
@@ -63,7 +60,7 @@ function MerchCard({ item }) {
       color: color === "black" ? colorBlackLabel : colorWhiteLabel,
       price: item.price,
       oldPrice: item.oldPrice,
-      image: imageSrc,
+      image: color === "black" ? item.blackImage : item.whiteImage,
     });
   };
 
@@ -72,9 +69,14 @@ function MerchCard({ item }) {
       {/* Image */}
       <div className="relative overflow-hidden bg-white/5 aspect-[3/4]">
         <img
-          src={imageSrc}
-          alt={altText}
-          className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+          src={item.blackImage}
+          alt={`${itemName} ${colorBlackLabel}`}
+          className={`absolute inset-0 w-full h-full object-cover transition-all duration-300 group-hover:scale-105 ${color === "black" ? "opacity-100" : "opacity-0"}`}
+        />
+        <img
+          src={item.whiteImage}
+          alt={`${itemName} ${colorWhiteLabel}`}
+          className={`absolute inset-0 w-full h-full object-cover transition-all duration-300 group-hover:scale-105 ${color === "white" ? "opacity-100" : "opacity-0"}`}
         />
         {/* Sale badge */}
         <span className="absolute top-3 left-3 bg-[#a40000] text-white text-[10px] uppercase tracking-widest font-semibold px-2.5 py-1 rounded-full">
