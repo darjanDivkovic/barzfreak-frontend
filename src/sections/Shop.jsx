@@ -6,7 +6,7 @@ import { translations } from "../i18n/translations";
 import TShirtBlack from "../../public/assets/merch/TShirtBlack.png";
 import TShirtWhite from "../../public/assets/merch/TShirtWhite.png";
 import HoodieBlack from "../../public/assets/merch/HoodieBlack.png";
-import HoodieWhite from "../../public/assets/merch/HoodieWhite.png";
+import HoodieWhite from "../../public/assets/merch/HoodieWhite.jpg";
 import PantsBlack from "../../public/assets/merch/PantsBlack.png";
 import PantsWhite from "../../public/assets/merch/PantsWhite.png";
 
