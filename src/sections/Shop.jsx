@@ -26,7 +26,7 @@ const merchItems = [
     key: "hoodie",
     blackImage: HoodieBlack,
     whiteImage: HoodieWhite,
-    price: 40,
+    price: 50,
     oldPrice: 70,
   },
   {
@@ -102,10 +102,14 @@ function MerchCard({ item }) {
         <p className="text-[10px] uppercase tracking-[0.2em] text-white/30 font-medium mb-1">
           {genderLabel}
         </p>
-        <h3 className="text-[1.15rem] font-semibold tracking-tight">{itemName}</h3>
+        <h3 className="text-[1.15rem] font-semibold tracking-tight">
+          {itemName}
+        </h3>
 
         <div className="flex items-end gap-3 mt-3">
-          <span className="text-[1.8rem] font-bold leading-none">{item.price} KM</span>
+          <span className="text-[1.8rem] font-bold leading-none">
+            {item.price} KM
+          </span>
           <span className="text-[1rem] text-white/30 line-through decoration-[#a40000] mb-0.5">
             {item.oldPrice} KM
           </span>
@@ -124,7 +128,9 @@ function ColorButton({ color, isSelected, onClick, label }) {
       title={label}
       aria-label={`Select ${label}`}
       className={`w-5 h-5 rounded-full border-2 transition-all duration-200 ${
-        isSelected ? "scale-110 border-white" : "border-white/30 opacity-60 hover:opacity-100"
+        isSelected
+          ? "scale-110 border-white"
+          : "border-white/30 opacity-60 hover:opacity-100"
       } ${color === "black" ? "bg-zinc-900" : "bg-white"}`}
     />
   );
@@ -140,7 +146,10 @@ export default function Shop() {
       {/* Section header */}
       <div className="flex items-center gap-6 mb-12">
         <div className="flex-1 h-px bg-white/15" />
-        <span className="text-[1.1rem] text-white/70 shrink-0" style={{ fontFamily: "'Rock Salt', cursive" }}>
+        <span
+          className="text-[1.1rem] text-white/70 shrink-0"
+          style={{ fontFamily: "'Rock Salt', cursive" }}
+        >
           {label}
         </span>
         <div className="flex-1 h-px bg-white/15" />
